@@ -1,0 +1,58 @@
+#===============================#
+#								#
+#		Skript by DeiDei_		#
+#								#
+#===============================#
+
+options:
+	bypass: "pseudo1" or "pseudo2" or "pseudo3" or "pseudo4" or "pseudo5" or "pseudo6" or "pseudo7" #Nickname who bypass maintenance | Pseudo qui bypass la maintenance
+	kickmessage: &5&l&k!!!&r &c&lCurrent Maintenance &5&l&k!!! #Message seen by the kicked | Message vu par la personne kick
+	maintenanceon: &f&l[&cServer&f&l] &bMaintenance &6Activé &b! #Message sent when the maintenance is actived | Message envoyé quand le mode maintenance est activé
+	maintenanceoff: &f&l[&cServer&f&l] &bMaintenance &cDesactivé &b! #Message sent when the maintenance is deactivated | Message envoyé quand le mode maintenance est desactivé
+	maintenanceactive: &f&l[&cServer&f&l] &bLe mode maintenance est &6Activé &b! #answer of /maintenance info (actived) | réponse du /maintenance info (activé)
+	maintenancedesactive: &f&l[&cServer&f&l] &bLe mode maintenance est &cDesactivé &b! #answer of /maintenance info (deactivated) | réponse du /maintenance info (desactivé)
+	permissionmessage: &f&l[&cServer&f&l] &cVous n'avez pas le droit de faire ça ! #message sent to those who do not have permission | message envoyé à ceux qui n'ont pas la permission
+	bypassmessage: &f&l[&cServer&f&l] &bBypass du mode Maintenance ! #Bypass message | message envoyé au gens ajouter a la list bypass
+
+
+
+#===============================#
+#								#
+#		Don't Touch code		#
+#	  Ne touchez pas au code	#
+#								#
+#===============================#
+
+
+on connect:
+	if {maintenance} = "true":
+		if player = {@bypass}:
+			send ""
+		else:
+			kick the player due to "{@kickmessage}"
+
+
+
+command /maintenance [<text>]:
+	permission: maintenance.use
+	permission message: {@permissionmessage}
+	usage: &c/maintenance [<on/off/info>]
+	aliases: mte
+	trigger:
+		if arg-1 = "on":
+			set {maintenance} to "true"
+			send "{@maintenanceon}"
+		else if arg-1 = "off":
+			set {maintenance} to "false"
+			send "{@maintenanceoff}"
+		else if arg-1 = "info":
+			if {maintenance} = "true":
+				send "{@maintenanceactive}"
+			else if {maintenance} = "false":
+				send "{@maintenancedesactive}"
+
+#===============================#
+#								#
+#		Skript by DeiDei_		#
+#								#
+#===============================#
